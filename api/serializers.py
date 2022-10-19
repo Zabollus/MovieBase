@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from models import Person, Genre, Movie
+from api.models import Person, Genre, Movie
+
 
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
