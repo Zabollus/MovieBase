@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 function Movie({movie}) {
     return (
         <Col>
-            <Card className='shadow-sm rounded'>
+            <Card className='shadow-sm rounded m-3 p-2'>
                 <Card.Title><Link to={"/movie/" + movie.id}>{movie.title}</Link></Card.Title>
                 <Card.Text>
                     Rok: {movie.year}<br/>

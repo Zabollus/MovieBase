@@ -17,7 +17,7 @@ function MovieDetails(props) {
     return (
     <>
         {!movie && <h1>Ładowanie...</h1>}
-        {movie && <Container>
+        {movie && <Container className='m-4'>
             <Row>
                 <Col>
                     <h1>{movie.title}</h1>
