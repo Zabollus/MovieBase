@@ -9,6 +9,7 @@ function MyNavbar() {
                 <Navbar.Brand href="/" style={{color:"white"}}>MovieBase</Navbar.Brand>
                 <Nav className='me-auto'>
                     <Nav.Link href='/movie/1' style={{color:"white"}}>Najlepszy film</Nav.Link>
+                    <Nav.Link href='/add/movie' style={{color:"white"}}>Dodaj film</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
