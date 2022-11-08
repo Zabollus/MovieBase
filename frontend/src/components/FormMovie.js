@@ -83,7 +83,19 @@ function FormMovie() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log(form);
+        let url = 'http://127.0.0.1:8000/movies/'
+        fetch(url, {
+            method:'POST',
+            headers:{
+                'Content-type':'application/json',
+            },
+            body:JSON.stringify(form)
+        }).then((response) => {
+            setForm({title: '', year: '', description: '', rating:'', director:'1', screenplay:'1', genres:[],
+            starring:[{person:'1', role:''}]})
+        }).catch(function(error){
+            console.log('ERROR: ', error);
+        })
     }
 
     return (
