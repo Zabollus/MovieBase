@@ -26,6 +26,7 @@ class Movie(models.Model):
     year = models.IntegerField(verbose_name='Rok')
     rating = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='Ocena')
     genre = models.ManyToManyField(Genre, verbose_name='Gatunek')
+    description = models.TextField()
     
     def __str__(self):
         return self.title
@@ -38,6 +39,7 @@ class PersonMovie(models.Model):
 
     def __str__(self):
         return f'{self.person.first_name} {self.person.last_name} jako {self.role} w {self.movie.title}'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

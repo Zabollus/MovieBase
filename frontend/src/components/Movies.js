@@ -2,33 +2,14 @@ import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Card } from 'react-bootstrap'
 
 function Movie({movie}) {
-    const [director, setDirector] = useState('')
-    const [screenplay, setScreenplay] = useState('')
-    useEffect(() => {
-        const fetchDirector = async() => {
-        const response = await fetch(movie.director)
-        const data = await response.json()
-
-        setDirector(data);
-        }
-        const fetchScreenplay = async() => {
-        const response = await fetch(movie.screenplay)
-        const data = await response.json()
-
-        setScreenplay(data);
-        }
-        fetchDirector();
-        fetchScreenplay();
-    }, []);
-
     return (
         <Col>
             <Card className='shadow-sm rounded'>
                 <Card.Title>{movie.title}</Card.Title>
                 <Card.Text>
                     Rok: {movie.year}<br/>
-                    Reżyser: {director.first_name} {director.last_name}<br/>
-                    Scenarzysta: {screenplay.first_name} {screenplay.last_name}<br/>
+                    Reżyser: {movie.director.first_name} {movie.director.last_name}<br/>
+                    Scenarzysta: {movie.screenplay.first_name} {movie.screenplay.last_name}<br/>
                 </Card.Text>
             </Card>
         </Col>
