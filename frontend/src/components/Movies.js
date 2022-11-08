@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 function Movie({movie}) {
     return (
         <Col>
             <Card className='shadow-sm rounded'>
-                <Card.Title>{movie.title}</Card.Title>
+                <Card.Title><Link to={"/movie/" + movie.id}>{movie.title}</Link></Card.Title>
                 <Card.Text>
                     Rok: {movie.year}<br/>
                     Reżyser: {movie.director.first_name} {movie.director.last_name}<br/>

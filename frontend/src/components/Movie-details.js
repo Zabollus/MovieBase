@@ -6,7 +6,7 @@ function MovieDetails(props) {
 
     useEffect(() => {
         const fetchData = async() => {
-            const response = await fetch(`http://127.0.0.1:8000/movies/${props.movieID}`)
+            const response = await fetch(`http://127.0.0.1:8000/movies/${props.match.params.movieID}`)
             const data = await response.json()
 
             setMovie(data);
