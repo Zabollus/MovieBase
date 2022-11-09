@@ -5,6 +5,7 @@ import MovieDetails from "./components/Movie-details"
 import MyNavbar from "./components/MyNavbar"
 import FormMovie from "./components/FormMovie"
 import FormPerson from "./components/FormPerson"
+import FormGenre from "./components/FormGenre"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path='/movie/:movieID' component={MovieDetails}/>
             <Route path='/add/movie' component={FormMovie}/>
             <Route path='/add/person' component={FormPerson}/>
+            <Route path='/add/genre' component={FormGenre}/>
         </Switch>
     </BrowserRouter>
   </>

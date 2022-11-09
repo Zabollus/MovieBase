@@ -11,6 +11,7 @@ function MyNavbar() {
                     <Nav.Link href='/movie/1' style={{color:"white"}}>Najlepszy film</Nav.Link>
                     <Nav.Link href='/add/movie' style={{color:"white"}}>Dodaj film</Nav.Link>
                     <Nav.Link href='/add/person' style={{color:"white"}}>Dodaj osobę</Nav.Link>
+                    <Nav.Link href='/add/genre' style={{color:"white"}}>Dodaj gatunek</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
