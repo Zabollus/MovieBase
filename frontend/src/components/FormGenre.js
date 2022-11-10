@@ -5,7 +5,7 @@ function FormGenre() {
     const [form, setForm] = useState({name:''})
 
     const handleChange = e => {
-        const {name, value} = e.target;
+        const value = e.target.value;
         setForm({name: value});
     };
 

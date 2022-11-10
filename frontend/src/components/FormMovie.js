@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {Container, Row, Form, Button, InputGroup} from 'react-bootstrap'
 
+const DEFAULT_FORM_STATE = {title: '', year: '', description: '', rating:'', director_id:'1',
+    screenplay_id:'1', genre_id:[], starring_id:[{person:'1', role:''}]}
+
 function FormMovie() {
-    const [form, setForm] = useState({title: '', year: '', description: '', rating:'', director:'1', screenplay:'1', genres:[],
-    starring:[{person:'1', role:''}]})
+    const [form, setForm] = useState(DEFAULT_FORM_STATE)
     const [persons, setPersons] = useState([])
     const [genres, setGenres] = useState([])
 
@@ -44,19 +46,19 @@ function FormMovie() {
         setForm(prevState => {
             return {
                 ...prevState,
-                genres:values
+                genre_id:values
             }
         })
     }
 
     const handleChangeStarring = (index, event) => {
-        const newStarring = [...form.starring];
+        const newStarring = [...form.starring_id];
         newStarring[index][event.target.name] = event.target.value;
 
         setForm(prevState => {
             return {
                 ...prevState,
-                starring: newStarring
+                starring_id: newStarring
             }
         });
     }
@@ -65,18 +67,18 @@ function FormMovie() {
         setForm(prevState => {
             return {
                 ...prevState,
-                starring: [...prevState.starring, {person:'1', role:''}]
+                starring_id: [...prevState.starring_id, {person:'1', role:''}]
             }
         });
     }
 
     const handleRemoveFields = id => {
-        const newStarring = [...form.starring];
+        const newStarring = [...form.starring_id];
         newStarring.splice(id, 1)
         setForm(prevState => {
             return {
                 ...prevState,
-                starring: newStarring
+                starring_id: newStarring
             }
         });
     }
@@ -91,10 +93,9 @@ function FormMovie() {
             },
             body:JSON.stringify(form)
         }).then((response) => {
-            setForm({title: '', year: '', description: '', rating:'', director:'1', screenplay:'1', genres:[],
-            starring:[{person:'1', role:''}]})
+//            setForm(DEFAULT_FORM_STATE)
         }).catch(function(error){
-            console.log('ERROR: ', error);
+            console.log(error);
         })
     }
 
@@ -108,61 +109,61 @@ function FormMovie() {
                     </InputGroup>
 
                     <InputGroup className='m-2'>
-                    <Form.Label className='m-1 w-25'>Rok produkcji:</Form.Label>
-                    <Form.Control type='number' name='year' value={form.year} onChange={handleChange}/>
+                        <Form.Label className='m-1 w-25'>Rok produkcji:</Form.Label>
+                        <Form.Control type='number' name='year' value={form.year} onChange={handleChange}/>
                     </InputGroup>
 
                     <InputGroup className='m-2'>
-                    <Form.Label className='m-1 w-25'>Opis:</Form.Label>
-                    <Form.Control as='textarea' name='description' value={form.description} onChange={handleChange}
-                    style={{height:'100px'}}/>
+                        <Form.Label className='m-1 w-25'>Opis:</Form.Label>
+                        <Form.Control as='textarea' name='description' value={form.description} onChange={handleChange}
+                        style={{height:'100px'}}/>
+                        </InputGroup>
+
+                        <InputGroup className='m-2'>
+                        <Form.Label className='m-1 w-25'>Ocena:</Form.Label>
+                        <Form.Control type='number' name='rating' value={form.rating} onChange={handleChange}/>
                     </InputGroup>
 
                     <InputGroup className='m-2'>
-                    <Form.Label className='m-1 w-25'>Ocena:</Form.Label>
-                    <Form.Control type='number' name='rating' value={form.rating} onChange={handleChange}/>
+                        <Form.Label className='m-1 w-25'>Reżyser:</Form.Label>
+                        <Form.Select name='director_id' value={form.director_id} onChange={handleChange}>
+                        {persons.map((person) => {
+                            return <option value={person.id} key={person.id}>{person.first_name} {person.last_name}</option>
+                        })}
+                        </Form.Select>
                     </InputGroup>
 
                     <InputGroup className='m-2'>
-                    <Form.Label className='m-1 w-25'>Reżyser:</Form.Label>
-                    <Form.Select name='director' value={form.director} onChange={handleChange}>
-                    {persons.map((person) => {
-                        return <option value={person.id} key={person.id}>{person.first_name} {person.last_name}</option>
-                    })}
-                    </Form.Select>
+                        <Form.Label className='m-1 w-25'>Scenarzysta:</Form.Label>
+                        <Form.Select name='screenplay_id' value={form.screenplay_id} onChange={handleChange}>
+                        {persons.map((person) => {
+                            return <option value={person.id} key={person.id}>{person.first_name} {person.last_name}</option>
+                        })}
+                        </Form.Select>
                     </InputGroup>
 
                     <InputGroup className='m-2'>
-                    <Form.Label className='m-1 w-25'>Scenarzysta:</Form.Label>
-                    <Form.Select name='screenplay' value={form.screenplay} onChange={handleChange}>
-                    {persons.map((person) => {
-                        return <option value={person.id} key={person.id}>{person.first_name} {person.last_name}</option>
-                    })}
-                    </Form.Select>
-                    </InputGroup>
-
-                    <InputGroup className='m-2'>
-                    <Form.Label className='m-1 w-25'>Gatunki:</Form.Label>
-                    <Form.Select multiple value={form.genres} onChange={handleSelectedMultiple}>
-                    {genres.map((genre) => {
-                        return <option value={genre.id} key={genre.id}>{genre.name}</option>
-                    })}
-                    </Form.Select>
+                        <Form.Label className='m-1 w-25'>Gatunki:</Form.Label>
+                        <Form.Select multiple name='genre_id' value={form.genre_id} onChange={handleSelectedMultiple}>
+                        {genres.map((genre) => {
+                            return <option value={genre.id} key={genre.id}>{genre.name}</option>
+                        })}
+                        </Form.Select>
                     </InputGroup>
 
                     <Form.Label className='m-1 w-25'>Obsada:</Form.Label>
-                    {form.starring.map((star, index) => {
+                    {form.starring_id.map((star, index) => {
                      return (<div key={index}>
-                     <InputGroup>
-                        <Form.Label className='m-1 ms-4 mt-2'>Aktor:</Form.Label>
-                        <Form.Select name='person' value={star.person} onChange={e => handleChangeStarring(index, e)}>
-                            {persons.map((person) => {
-                                return <option value={person.id} key={person.id}>{person.first_name} {person.last_name}</option>
-                            })}
-                        </Form.Select>
-                        <Form.Label className='m-1 ms-4 mt-2'>Rola:</Form.Label>
-                        <Form.Control type='text' name='role' value={star.role} onChange={e => handleChangeStarring(index, e)}/>
-                        <Button className='m-1' variant='danger' disabled={form.starring.length === 1} onClick={() => handleRemoveFields(index)}>−</Button>
+                        <InputGroup className='m-1'>
+                            <Form.Label className='m-1 ms-4 mt-2'>Aktor:</Form.Label>
+                            <Form.Select name='person' value={star.person} onChange={e => handleChangeStarring(index, e)}>
+                                {persons.map((person) => {
+                                    return <option value={person.id} key={person.id}>{person.first_name} {person.last_name}</option>
+                                })}
+                            </Form.Select>
+                            <Form.Label className='m-1 ms-4 mt-2'>Rola:</Form.Label>
+                            <Form.Control type='text' name='role' value={star.role} onChange={e => handleChangeStarring(index, e)}/>
+                            <Button className='m-1' variant='danger' disabled={form.starring_id.length === 1} onClick={() => handleRemoveFields(index)}>−</Button>
                         </InputGroup>
                     </div>)
                     })}
