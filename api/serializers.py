@@ -54,3 +54,21 @@ class MovieSerializer(serializers.ModelSerializer):
             PersonMovie.objects.create(person=star['person'], movie=movie, role=star['role'])
         return movie
 
+    def update(self, instance, validated_data):
+        genres = validated_data.pop('genre_id')
+        director = validated_data.pop('director_id')
+        screenplay = validated_data.pop('screenplay_id')
+        starring = validated_data.pop('starring_id')
+        instance.title = validated_data.get('title', instance.title)
+        instance.director = director
+        instance.screenplay = screenplay
+        instance.year = validated_data.get('year', instance.year)
+        instance.rating = validated_data.get('rating', instance.rating)
+        instance.description = validated_data.get('description', instance.description)
+        instance.genre.clear()
+        instance.starring.clear()
+        instance.genre.set(genres)
+        for star in starring:
+            PersonMovie.objects.create(person=star['person'], movie=instance, role=star['role'])
+        instance.save()
+        return instance

@@ -15,9 +15,10 @@ function App() {
         <Switch>
             <Route exact path='/' component={Movies}/>
             <Route path='/movie/:movieID' component={MovieDetails}/>
-            <Route path='/add/movie' component={FormMovie}/>
+            <Route path='/add/movie' component={FormMovie} />
             <Route path='/add/person' component={FormPerson}/>
             <Route path='/add/genre' component={FormGenre}/>
+            <Route path='/edit/movie/:movieID' component={FormMovie}/>
         </Switch>
     </BrowserRouter>
   </>

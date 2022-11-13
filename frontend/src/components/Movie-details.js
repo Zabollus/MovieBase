@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 
 function MovieDetails(props) {
     const [movie, setMovie] = useState(null)
@@ -21,6 +21,7 @@ function MovieDetails(props) {
             <Row>
                 <Col>
                     <h1>{movie.title}</h1>
+                    <Button variant='warning' href={`/edit/movie/${movie.id}`}>Edytuj film</Button>
                 </Col>
                 <Col>
                     <p>{movie.description}</p>

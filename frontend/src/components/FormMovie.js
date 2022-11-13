@@ -4,10 +4,30 @@ import {Container, Row, Form, Button, InputGroup} from 'react-bootstrap'
 const DEFAULT_FORM_STATE = {title: '', year: '', description: '', rating:'', director_id:'1',
     screenplay_id:'1', genre_id:[], starring_id:[{person:'1', role:''}]}
 
-function FormMovie() {
+function FormMovie(props) {
     const [form, setForm] = useState(DEFAULT_FORM_STATE)
     const [persons, setPersons] = useState([])
     const [genres, setGenres] = useState([])
+
+    useEffect(() => {
+        if(props.location.pathname.indexOf('edit') > -1) {
+            const fetchData = async() => {
+                const response = await fetch(`http://127.0.0.1:8000/movies/${props.match.params.movieID}`)
+                const data = await response.json()
+                let newStarring = data.starring.map((star) => {
+                    return {person:star.person.id, role:star.role}
+                })
+                let newGenres = data.genre.map((genre) => {
+                    return genre.id
+                })
+                setForm({title: data.title, year: data.year, description: data.description, rating:data.rating,
+                director_id:data.director.id, screenplay_id:data.screenplay.id, genre_id:newGenres,
+                starring_id:newStarring})
+            }
+
+            fetchData();
+        }
+    }, []);
 
     useEffect(() => {
         const fetchData = async() => {
@@ -85,18 +105,32 @@ function FormMovie() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        let url = 'http://127.0.0.1:8000/movies/'
-        fetch(url, {
-            method:'POST',
-            headers:{
-                'Content-type':'application/json',
-            },
-            body:JSON.stringify(form)
-        }).then((response) => {
-//            setForm(DEFAULT_FORM_STATE)
-        }).catch(function(error){
-            console.log(error);
-        })
+        if(props.location.pathname.indexOf('edit') > -1) {
+            fetch(`http://127.0.0.1:8000/movies/${props.match.params.movieID}/`, {
+                method:'PATCH',
+                headers:{
+                    'Content-type':'application/json',
+                },
+                body:JSON.stringify(form)
+            }).then((response) => {
+                console.log('Udało się edytować film')
+            }).catch(function(error){
+                console.log(error);
+            })
+        } else {
+            let url = 'http://127.0.0.1:8000/movies/'
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json',
+                },
+                body:JSON.stringify(form)
+            }).then((response) => {
+                console.log('Udało sie dodać film')
+            }).catch(function(error){
+                console.log(error);
+            })
+        }
     }
 
     return (
@@ -170,7 +204,9 @@ function FormMovie() {
                     <Row className='justify-content-center'>
                     <Button className='m-1 ms-5 w-25' variant='success' onClick={handleAddFields}>+</Button>
                     </Row>
-                    <Button type='submit' variant='primary'>Dodaj film</Button>
+                    {props.location.pathname.indexOf('edit') > -1 ?
+                    <Button type='submit' variant='warning'>Edytuj film</Button> :
+                    <Button type='submit' variant='primary'>Dodaj film</Button>}
                 </Form.Group>
             </Form>
         </Container>
