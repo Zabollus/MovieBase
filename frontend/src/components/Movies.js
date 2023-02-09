@@ -33,7 +33,7 @@ function Movies() {
     return (
         <>
             {!movies && <h1>Ładowanie...</h1>}
-            {movies && <Container>
+            {movies && <Container className='my-3'>
                 <Row>
                     {movies.map((movie) => {
                         return <Movie key={movie.id} movie={movie} />

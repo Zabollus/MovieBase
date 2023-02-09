@@ -26,7 +26,7 @@ function FormGenre() {
     }
 
     return (
-        <Container className='m-3'>
+        <Container className='my-3'>
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <InputGroup className='m-2'>
