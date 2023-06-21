@@ -22,7 +22,8 @@ services:
              python manage.py loaddata initial_data.json &&
              python manage.py runserver 0.0.0.0:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres:alpine
     restart: always
@@ -33,3 +34,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     container_name: postgres_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
