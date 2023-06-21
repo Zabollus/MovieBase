@@ -11,7 +11,7 @@ function FormGenre() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        let url = 'http://127.0.0.1:8000/genres/'
+        let url = 'http://localhost:8000/genres/'
         fetch(url, {
             method:'POST',
             headers:{

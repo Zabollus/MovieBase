@@ -31,7 +31,7 @@ function FormMovie(props) {
 
     useEffect(() => {
         const fetchData = async() => {
-            const response = await fetch('http://127.0.0.1:8000/persons/')
+            const response = await fetch('http://localhost:8000/persons/')
             const data = await response.json()
 
             setPersons(data);
@@ -42,7 +42,7 @@ function FormMovie(props) {
 
     useEffect(() => {
         const fetchData = async() => {
-            const response = await fetch('http://127.0.0.1:8000/genres/')
+            const response = await fetch('http://localhost:8000/genres/')
             const data = await response.json()
 
             setGenres(data);
@@ -106,7 +106,7 @@ function FormMovie(props) {
     const handleSubmit = e => {
         e.preventDefault()
         if(props.location.pathname.indexOf('edit') > -1) {
-            fetch(`http://127.0.0.1:8000/movies/${props.match.params.movieID}/`, {
+            fetch(`http://localhost:8000/movies/${props.match.params.movieID}/`, {
                 method:'PATCH',
                 headers:{
                     'Content-type':'application/json',
@@ -118,7 +118,7 @@ function FormMovie(props) {
                 console.log(error);
             })
         } else {
-            let url = 'http://127.0.0.1:8000/movies/'
+            let url = 'http://localhost:8000/movies/'
             fetch(url, {
                 method:'POST',
                 headers:{

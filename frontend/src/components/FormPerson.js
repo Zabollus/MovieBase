@@ -16,7 +16,7 @@ function FormPerson() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        let url = 'http://127.0.0.1:8000/persons/'
+        let url = 'http://localhost:8000/persons/'
         fetch(url, {
             method:'POST',
             headers:{
