@@ -1,0 +1,10 @@
+.git
+.gitignore
+.docker
+venv
+.env
+.venv
+.idea
+.pytest_cache
+data
+**/local_settings.py
