@@ -2,3 +2,4 @@
 .gitignore
 .docker
 node_modules
+build
